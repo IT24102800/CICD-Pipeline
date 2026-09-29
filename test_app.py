@@ -3,6 +3,7 @@ from app import (
     validate_username,
     create_profile_message,
     generate_reset_code,
+    show_directory_contents,
 )
 
 
@@ -36,3 +37,14 @@ def test_reset_code_has_six_digits():
     code = generate_reset_code()
     assert len(code) == 6
     assert code.isdigit()
+
+
+def test_show_directory_contents_lists_entries(tmp_path, monkeypatch, capsys):
+    (tmp_path / "alpha.txt").write_text("a", encoding="utf-8")
+    (tmp_path / ".hidden").write_text("b", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+
+    show_directory_contents()
+    output_lines = capsys.readouterr().out.splitlines()
+
+    assert output_lines == [".hidden", "alpha.txt"]

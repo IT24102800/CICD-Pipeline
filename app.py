@@ -1,4 +1,4 @@
-import subprocess
+import os
 import secrets
 
 
@@ -8,8 +8,9 @@ def generate_reset_code():
 
 
 def show_directory_contents():
-    """Safer version — no shell=True, command passed as a list."""
-    subprocess.run(["ls", "-la"], check=True)    # nosec B603
+    """Print current directory contents without spawning a subprocess."""
+    for name in sorted(os.listdir(".")):
+        print(name)
 
 
 def validate_username(username):

@@ -9,7 +9,7 @@ def generate_reset_code():
 
 def show_directory_contents():
     """Safer version — no shell=True, command passed as a list."""
-    subprocess.run(["ls", "-la"], check=True)
+    subprocess.run(["ls", "-la"], check=True)    # nosec B603
 
 
 def validate_username(username):

@@ -1,8 +1,21 @@
 import subprocess
+import secrets
+
+def generate_reset_code():
+    """Generate a six-digit password reset code (secure)."""
+    return f"{secrets.randbelow(1_000_000):06d}"
+
+def test_reset_code_is_string():
+    assert isinstance(generate_reset_code(), str)
+
+def test_reset_code_has_six_digits():
+    code = generate_reset_code()
+    assert len(code) == 6
+    assert code.isdigit()
 
 def show_directory_contents():
-    """Intentionally insecure example for security testing."""
-    subprocess.call("dir", shell=True)
+    """Safer version for Windows."""
+    subprocess.run(["cmd", "/c", "dir"], check=True)
 
 def validate_username(username):
     """Return True when a username is acceptable."""
